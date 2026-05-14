@@ -4,7 +4,7 @@ import {
   FaBaby, FaClipboardCheck, FaEnvelope, FaUsers, FaDollarSign,
   FaCalendarCheck, FaShieldAlt, FaUtensils, FaBrain, FaClock,
   FaTachometerAlt, FaSignOutAlt, FaUserPlus, FaPhoneAlt,
-  FaDoorOpen, FaPuzzlePiece, FaSyringe, FaClipboardList, FaBoxes, FaFileAlt
+  FaDoorOpen, FaPuzzlePiece, FaSyringe, FaClipboardList, FaBoxes, FaFileAlt, FaFlask
 } from 'react-icons/fa';
 
 const navItems = [
@@ -32,6 +32,22 @@ const navItems = [
   { divider: true, label: 'AI & SCHEDULING' },
   { path: '/assessments', label: 'AI Assessments', icon: FaBrain },
   { path: '/staff-scheduling', label: 'Staff Scheduling', icon: FaClock },
+  { path: '/ai-features', label: 'AI Features', icon: FaFlask },
+,
+  // // === Batch 02 Gaps & Frontend Mounts ===
+  { path: '/cf/predictive-child-development-flagging', icon: '+', label: 'CF: PredictiveChildDevelopme' },
+  { path: '/cf/parent-engagement-prediction', icon: '+', label: 'CF: ParentEngagementPredicti' },
+  { path: '/cf/staff-burnout-prediction', icon: '+', label: 'CF: StaffBurnoutPrediction' },
+  { path: '/cf/curriculum-personalization', icon: '+', label: 'CF: CurriculumPersonalizatio' },
+  { path: '/cf/nutrition-optimization', icon: '+', label: 'CF: NutritionOptimization' },
+  { path: '/gap/none-major-strong-ai-to-route-alignment-across-compliance-mi', icon: '+', label: 'Gap: NoneMajorStrongAiToRoute' },
+  { path: '/gap/inventory-lacks-ai-reorder-prediction', icon: '+', label: 'Gap: InventoryLacksAiReorderP' },
+  { path: '/gap/attendance-lacks-ai-no-show-prediction', icon: '+', label: 'Gap: AttendanceLacksAiNoShowP' },
+  { path: '/gap/no-photo-video-sharing-with-parents-privacy-compliant', icon: '+', label: 'Gap: NoPhotoVideoSharingWithP' },
+  { path: '/gap/limited-mobile-app-for-parents-only-stub-hooks', icon: '+', label: 'Gap: LimitedMobileAppForParen' },
+  { path: '/gap/limited-integration-with-health-immunization-registries', icon: '+', label: 'Gap: LimitedIntegrationWithHe' },
+  { path: '/gap/no-state-specific-compliance-validation-rules-engine', icon: '+', label: 'Gap: NoStateSpecificComplianc' },
+  { path: '/gap/no-webhooks', icon: '+', label: 'Gap: NoWebhooks' }
 ];
 
 const Sidebar = ({ onLogout }) => {

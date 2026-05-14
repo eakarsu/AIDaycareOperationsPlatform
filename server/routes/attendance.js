@@ -1,11 +1,21 @@
 const router = require('express').Router();
 const pool = require('../db');
 
-// GET all attendance records
+// GET all attendance records (paginated)
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM attendance ORDER BY date DESC, id');
-    res.json(result.rows);
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 25));
+    const offset = (page - 1) * limit;
+
+    const countResult = await pool.query('SELECT COUNT(*) FROM attendance');
+    const total = parseInt(countResult.rows[0].count, 10);
+
+    const result = await pool.query('SELECT * FROM attendance ORDER BY date DESC, id LIMIT $1 OFFSET $2', [limit, offset]);
+    res.json({
+      data: result.rows,
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) }
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: 'Server error' });

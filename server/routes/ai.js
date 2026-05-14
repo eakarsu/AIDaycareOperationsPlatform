@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
+const { aiRateLimiter } = require('../middleware/rateLimiter');
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
@@ -7,7 +8,7 @@ async function callAI(systemPrompt, userMessage) {
   const response = await axios.post(
     OPENROUTER_URL,
     {
-      model: process.env.OPENROUTER_MODEL || 'anthropic/claude-haiku-4.5',
+      model: process.env.OPENROUTER_MODEL || 'anthropic/claude-3-5-sonnet-20241022',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage },
@@ -24,7 +25,7 @@ async function callAI(systemPrompt, userMessage) {
 }
 
 // POST /api/ai/milestone-assessment
-router.post('/milestone-assessment', async (req, res) => {
+router.post('/milestone-assessment', aiRateLimiter, async (req, res) => {
   try {
     const { milestone } = req.body;
     const systemPrompt = `You are an expert child development specialist working in a daycare setting. Analyze the child's developmental milestones and provide a detailed assessment. Consider age-appropriate expectations across cognitive, physical, social-emotional, and language domains. Provide specific recommendations for activities and interventions to support the child's development. Flag any areas of concern that may need professional evaluation.`;
@@ -38,7 +39,7 @@ router.post('/milestone-assessment', async (req, res) => {
 });
 
 // POST /api/ai/compliance-check
-router.post('/compliance-check', async (req, res) => {
+router.post('/compliance-check', aiRateLimiter, async (req, res) => {
   try {
     const { compliance } = req.body;
     const systemPrompt = `You are a daycare licensing compliance expert. Analyze the provided compliance requirement and its current status. Identify any gaps, upcoming deadlines, and potential risks. Provide specific actionable recommendations to maintain full compliance with state and local daycare licensing regulations. Consider health and safety codes, staff qualifications, facility requirements, and documentation standards.`;
@@ -52,7 +53,7 @@ router.post('/compliance-check', async (req, res) => {
 });
 
 // POST /api/ai/parent-response
-router.post('/parent-response', async (req, res) => {
+router.post('/parent-response', aiRateLimiter, async (req, res) => {
   try {
     const { communication } = req.body;
     const systemPrompt = `You are a warm, professional daycare administrator skilled in parent communication. Draft a thoughtful, empathetic response to the parent's message. Be informative and reassuring while maintaining professional boundaries. Address specific concerns raised, provide relevant information about daycare policies or the child's progress, and suggest next steps if appropriate. Keep the tone friendly yet professional.`;
@@ -66,7 +67,7 @@ router.post('/parent-response', async (req, res) => {
 });
 
 // POST /api/ai/ratio-optimization
-router.post('/ratio-optimization', async (req, res) => {
+router.post('/ratio-optimization', aiRateLimiter, async (req, res) => {
   try {
     const { ratio } = req.body;
     const systemPrompt = `You are a daycare operations expert specializing in staff-to-child ratio management. Analyze the current staff-to-child ratios. Ensure compliance with state regulations for each age group. Identify if the classroom is overstaffed or understaffed. Provide specific recommendations for staff reallocation, hiring needs, and scheduling adjustments to optimize ratios while maintaining regulatory compliance and quality of care.`;
@@ -80,7 +81,7 @@ router.post('/ratio-optimization', async (req, res) => {
 });
 
 // POST /api/ai/incident-analysis
-router.post('/incident-analysis', async (req, res) => {
+router.post('/incident-analysis', aiRateLimiter, async (req, res) => {
   try {
     const { incident } = req.body;
     const systemPrompt = `You are a child safety and risk management expert for daycare facilities. Analyze the reported incident thoroughly. Assess the severity, identify root causes, and evaluate the response taken. Provide recommendations for preventing similar incidents, required documentation and reporting obligations, follow-up actions needed, and any changes to safety protocols or facility arrangements. Consider both immediate and long-term implications.`;
@@ -94,7 +95,7 @@ router.post('/incident-analysis', async (req, res) => {
 });
 
 // POST /api/ai/nutrition-analysis
-router.post('/nutrition-analysis', async (req, res) => {
+router.post('/nutrition-analysis', aiRateLimiter, async (req, res) => {
   try {
     const { meal } = req.body;
     const systemPrompt = `You are a pediatric nutrition expert specializing in daycare meal planning. Analyze the provided meal plan for nutritional completeness and age-appropriateness. Evaluate caloric content, macronutrient balance, vitamin and mineral coverage, and allergen considerations. Provide specific recommendations for improvements, substitutions for common allergens, and ensure the meal meets USDA Child and Adult Care Food Program (CACFP) guidelines. Consider portion sizes appropriate for the specified age group.`;
@@ -108,7 +109,7 @@ router.post('/nutrition-analysis', async (req, res) => {
 });
 
 // POST /api/ai/developmental-report
-router.post('/developmental-report', async (req, res) => {
+router.post('/developmental-report', aiRateLimiter, async (req, res) => {
   try {
     const { assessment } = req.body;
     const systemPrompt = `You are a child development assessment specialist working in early childhood education. Generate a comprehensive developmental report based on the assessment data provided. Cover all developmental domains: cognitive, language, physical/motor, social-emotional, and adaptive behavior. Compare the child's progress to age-appropriate benchmarks. Include strengths, areas for growth, specific goals, and recommended activities for both the daycare setting and home environment. Format the report professionally for sharing with parents.`;
@@ -122,7 +123,7 @@ router.post('/developmental-report', async (req, res) => {
 });
 
 // POST /api/ai/schedule-optimization
-router.post('/schedule-optimization', async (req, res) => {
+router.post('/schedule-optimization', aiRateLimiter, async (req, res) => {
   try {
     const { schedule, allSchedules } = req.body;
     const systemPrompt = `You are a workforce scheduling optimization expert for daycare facilities. Analyze the current staff schedules and optimize them considering staff-to-child ratio requirements for each age group, staff availability and preferences, overtime minimization, adequate coverage during peak hours (drop-off and pick-up times), break scheduling compliance with labor laws, and cross-training opportunities. Provide a detailed optimized schedule with explanations for changes.`;
@@ -136,7 +137,7 @@ router.post('/schedule-optimization', async (req, res) => {
 });
 
 // POST /api/ai/activity-suggestions
-router.post('/activity-suggestions', async (req, res) => {
+router.post('/activity-suggestions', aiRateLimiter, async (req, res) => {
   try {
     const { activity } = req.body;
     const systemPrompt = `You are an early childhood education expert specializing in developmentally appropriate activities for daycare settings. Analyze the provided activity and suggest improvements, variations, extensions, and safety considerations. Consider the age group, learning objectives, materials needed, and how to make the activity more inclusive and engaging. Provide specific suggestions for adapting the activity for different skill levels within the age group.`;
