@@ -22,6 +22,7 @@ import WaitingList from './pages/WaitingList';
 import Inventory from './pages/Inventory';
 import DailyReports from './pages/DailyReports';
 import AIFeatures from './pages/AIFeatures';
+import AllergyActionPlan from './pages/AllergyActionPlan';
 
 // // === Batch 02 Gaps & Frontend Mounts ===
 import CfPredictiveChildDevelopmentFlagging from './pages/CfPredictiveChildDevelopmentFlagging';
@@ -37,6 +38,11 @@ import GapLimitedMobileAppForParentsOnlyStubHooks from './pages/GapLimitedMobile
 import GapLimitedIntegrationWithHealthImmunizationRegistries from './pages/GapLimitedIntegrationWithHealthImmunizationRegistries';
 import GapNoStateSpecificComplianceValidationRulesEngine from './pages/GapNoStateSpecificComplianceValidationRulesEngine';
 import GapNoWebhooks from './pages/GapNoWebhooks';
+
+import CodexCustomVizFeature from './pages/CodexCustomVizFeature';
+import CodexOperationsFeature from './pages/CodexOperationsFeature';
+
+import TimelineView from './pages/TimelineView';
 
 export const AuthContext = createContext(null);
 
@@ -64,6 +70,10 @@ function App() {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <Routes>
+        <Route path="/insights/timeline" element={<ProtectedRoute><TimelineView /></ProtectedRoute>} />
+        <Route path="/codex/custom-viz" element={<ProtectedRoute><CodexCustomVizFeature /></ProtectedRoute>} />
+        <Route path="/codex/operations" element={<ProtectedRoute><CodexOperationsFeature /></ProtectedRoute>} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/milestones" element={<ProtectedRoute><Milestones /></ProtectedRoute>} />
@@ -84,6 +94,7 @@ function App() {
         <Route path="/waiting-list" element={<ProtectedRoute><WaitingList /></ProtectedRoute>} />
         <Route path="/inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
         <Route path="/daily-reports" element={<ProtectedRoute><DailyReports /></ProtectedRoute>} />
+        <Route path="/allergy-action-plan" element={<ProtectedRoute><AllergyActionPlan /></ProtectedRoute>} />
         <Route path="/ai-features" element={<ProtectedRoute><AIFeatures /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       

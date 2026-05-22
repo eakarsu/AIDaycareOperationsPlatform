@@ -19,6 +19,7 @@ const navItems = [
   { path: '/attendance', label: 'Attendance', icon: FaCalendarCheck },
   { path: '/incidents', label: 'Health & Safety', icon: FaShieldAlt },
   { path: '/meals', label: 'Meal Planning', icon: FaUtensils },
+  { path: '/allergy-action-plan', label: 'Allergy Action Plan', icon: FaShieldAlt },
   { divider: true, label: 'MANAGEMENT' },
   { path: '/enrollment', label: 'Enrollment', icon: FaUserPlus },
   { path: '/emergency', label: 'Emergency Contacts', icon: FaPhoneAlt },

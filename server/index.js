@@ -57,6 +57,7 @@ app.use('/api/immunizations', require('./routes/immunizations'));
 app.use('/api/waitlist', require('./routes/waitlist'));
 app.use('/api/inventory', require('./routes/inventory'));
 app.use('/api/dailyreports', require('./routes/dailyreports'));
+app.use('/api/allergy-action-plan', require('./routes/allergyActionPlan'));
 
 // Health check
 app.get('/api/health', (req, res) => {
