@@ -29,11 +29,6 @@ const Login = () => {
     }
   };
 
-  const handleDemo = () => {
-    setEmail('admin@daycare.com');
-    setPassword('admin123');
-  };
-
   return (
     <div className="login-page">
       <div className="login-card">
@@ -72,9 +67,6 @@ const Login = () => {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
 
-          <button type="button" className="btn-demo" onClick={handleDemo}>
-            Demo Login (Auto-fill Credentials)
-          </button>
         </form>
       </div>
     </div>

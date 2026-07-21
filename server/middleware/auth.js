@@ -10,7 +10,8 @@ module.exports = function (req, res, next) {
   const token = header.startsWith('Bearer ') ? header.slice(7) : header;
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'daycare_jwt_secret');
+    if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) return res.status(503).json({ error: 'Authentication is not configured' });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded.user;
     next();
   } catch (err) {

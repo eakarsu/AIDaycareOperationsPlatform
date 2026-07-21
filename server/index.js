@@ -3,6 +3,15 @@ const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+  throw new Error('JWT_SECRET must be configured with at least 32 characters');
+}
+if (process.env.NODE_ENV === 'production' && (!process.env.CORS_ORIGINS || process.env.CORS_ORIGINS.includes('*'))) {
+  throw new Error('Production CORS_ORIGINS must be an explicit allowlist');
+}
+for (const key of ['DB_NAME', 'DB_USER', 'DB_PASSWORD']) {
+  if (!process.env[key]) throw new Error(`${key} is required`);
+}
 
 const app = express();
 
@@ -58,6 +67,7 @@ app.use('/api/waitlist', require('./routes/waitlist'));
 app.use('/api/inventory', require('./routes/inventory'));
 app.use('/api/dailyreports', require('./routes/dailyreports'));
 app.use('/api/allergy-action-plan', require('./routes/allergyActionPlan'));
+app.use('/api/governed-workflows', require('./routes/governedWorkflow'));
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -65,30 +75,6 @@ app.get('/api/health', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-none-major-strong-ai-to-route-alignment-across-compliance-mi', require('./routes/gap_none_major_strong_ai_to_route_alignment_across_compliance_mi'));
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-inventory-lacks-ai-reorder-prediction', require('./routes/gap_inventory_lacks_ai_reorder_prediction'));
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-attendance-lacks-ai-no-show-prediction', require('./routes/gap_attendance_lacks_ai_no_show_prediction'));
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-no-photo-video-sharing-with-parents-privacy-compliant', require('./routes/gap_no_photo_video_sharing_with_parents_privacy_compliant'));
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-limited-mobile-app-for-parents-only-stub-hooks', require('./routes/gap_limited_mobile_app_for_parents_only_stub_hooks'));
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-limited-integration-with-health-immunization-registries', require('./routes/gap_limited_integration_with_health_immunization_registries'));
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-no-state-specific-compliance-validation-rules-engine', require('./routes/gap_no_state_specific_compliance_validation_rules_engine'));
-
-// // === Batch 02 Gaps & Frontend Mounts ===
-app.use('/api/gap-no-webhooks', require('./routes/gap_no_webhooks'));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
