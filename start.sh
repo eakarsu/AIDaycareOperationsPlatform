@@ -14,6 +14,10 @@ for dir in "server" "client"; do
   fi
 done
 
+set -a
+. "$project_dir/.env"
+set +a
+
 cleanup() {
   [[ -n "${backend_pid:-}" ]] && kill "$backend_pid" 2>/dev/null || true
   [[ -n "${frontend_pid:-}" ]] && kill "$frontend_pid" 2>/dev/null || true

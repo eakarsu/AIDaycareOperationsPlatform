@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const axios = require('axios');
 const { aiRateLimiter } = require('../middleware/rateLimiter');
+const authenticate = require('../middleware/auth');
+
+router.use(authenticate);
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
