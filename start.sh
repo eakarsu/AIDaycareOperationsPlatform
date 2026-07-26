@@ -92,6 +92,10 @@ done
 set -a
 . "$project_dir/.env"
 set +a
+if [ "${NODE_ENV:-development}" != production ] && [ "${ENABLE_DEMO_CREDENTIAL_AUTOFILL:-true}" = true ]; then
+  psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$project_dir/server/migrations/002_governed_workflow.sql" >/dev/null
+  node "$project_dir/server/provision-demo-credentials.js"
+fi
 
 cleanup() {
   [[ -n "${backend_pid:-}" ]] && kill "$backend_pid" 2>/dev/null || true
