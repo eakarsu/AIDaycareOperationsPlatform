@@ -87,7 +87,9 @@ const Sidebar = ({ onLogout }) => {
                   `sidebar-nav-link ${isActive ? 'active' : ''}`
                 }
               >
-                <Icon className="nav-icon" />
+                {typeof Icon === 'string'
+                  ? <span className="nav-icon" aria-hidden="true">{Icon}</span>
+                  : <Icon className="nav-icon" />}
                 <span>{item.label}</span>
               </NavLink>
             </li>
